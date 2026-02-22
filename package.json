@@ -1,0 +1,28 @@
+{
+  "name": "comm-share",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Community Share",
+  "main": "index.js",
+  "scripts": {
+    "client": "npm --prefix client start",
+    "server": "node server/index.js",
+    "start": "concurrently -k -n server,client \"npm run server\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasonGM01/comm-share.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JasonGM01/comm-share/issues"
+  },
+  "homepage": "https://github.com/JasonGM01/comm-share#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
