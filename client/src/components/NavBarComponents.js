@@ -8,7 +8,7 @@ function Navbar() {
 
       <div className="nav-right">
         <a href="/" className="nav-link">Home</a>
-        <a href="/categories" className="nav-link">Browse Categoriesdir
+        <a href="/categories" className="nav-link">Browse Categories
         </a>
         <a href="/request" className="nav-link">Request Service</a>
         <a href="/offer" className="nav-link">Offer Service</a>
