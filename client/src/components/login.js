@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [isSignup, setIsSignup] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="App">
@@ -62,7 +64,10 @@ function Login() {
 
         <br />
 
-        <button style={{ marginTop: "20px" }}>
+        <button
+          style={{ marginTop: "20px" }}
+          onClick={() => navigate("/profile")}
+        >
           {isSignup ? "Create Account" : "Login"}
         </button>
 
