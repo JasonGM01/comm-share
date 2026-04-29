@@ -19,7 +19,7 @@ app.use("/api/offers", offerRoutes);
 
 mongoose
   .connect("mongodb+srv://jakisakilla_db_user:commshare123@commshare.pjq3n70.mongodb.net/?appName=commshare")
-  .then(() => console.log("MongoDB connected 🟢"))
+  .then(() => console.log("MongoDB connected 🟢", mongoose.connection.name))
   .catch((err) => console.error("MongoDB error 🔴", err));
 
 app.get("/", (req, res) => {
