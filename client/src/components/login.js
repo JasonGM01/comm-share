@@ -1,7 +1,34 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [isSignup, setIsSignup] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    const url = isSignup ? "/signup" : "/login";
+
+    const res = await fetch(`http://localhost:3001${url}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      console.log("Success:", data);
+      navigate("/profile");
+    } else {
+      alert(data.message || "Error");
+    }
+  };
 
   return (
     <div className="App">
@@ -17,6 +44,8 @@ function Login() {
         <input
           type="email"
           placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           style={{
             width: "350px",
             padding: "12px",
@@ -28,11 +57,12 @@ function Login() {
         />
 
         <br />
-        
 
         <input
           type="password"
           placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           style={{
             width: "350px",
             padding: "12px",
@@ -62,7 +92,10 @@ function Login() {
 
         <br />
 
-        <button style={{ marginTop: "20px" }}>
+        <button
+          style={{ marginTop: "20px" }}
+          onClick={handleSubmit}
+        >
           {isSignup ? "Create Account" : "Login"}
         </button>
 
