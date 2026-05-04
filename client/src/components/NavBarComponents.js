@@ -15,7 +15,6 @@ function Navbar() {
         <Link to="/request" className="nav-link">Request Service</Link>
         <Link to="/offer" className="nav-link">Offer Service</Link>
         <Link to="/login" className="loginButton">Sign Up/Login</Link>
-        
       </div>
     </nav>
   );

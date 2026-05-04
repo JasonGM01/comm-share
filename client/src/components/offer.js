@@ -7,6 +7,7 @@ function Offer() {
   const [rate, setRate] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [availability, setAvailability] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(true);
 
@@ -126,8 +127,8 @@ function Offer() {
         <input
           type="text"
           placeholder="Contact Email"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <br />
