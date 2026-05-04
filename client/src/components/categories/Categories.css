@@ -102,7 +102,7 @@
   padding: 16px 16px 8px;
   margin: 0;
   cursor: pointer;
-  color: #1d4ed8;
+  color: #5f8f4e;
 }
 
 .subcategory-card h3:hover {
@@ -160,19 +160,19 @@
 }
 
 .request-btn {
-  background-color: #2563eb;
+  background-color: #5f8f4e;
   color: white;
   border: none;
 }
 
 .request-btn:hover {
-  background-color: #1d4ed8;
+  background-color: #5f8f4e;
 }
 
 .offer-btn {
   background-color: white;
-  color: #2563eb;
-  border: 2px solid #2563eb;
+  color: #5f8f4e;
+  border: 2px solid #5f8f4e;
 }
 
 .offer-btn:hover {

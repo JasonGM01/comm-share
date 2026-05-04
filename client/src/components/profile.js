@@ -90,6 +90,7 @@ React.useEffect(() => {
       borderRadius: "50%",
       objectFit: "cover",
       marginBottom: "12px",
+      border: "3px solid #5a8a4a"
       border: "3px solid #10b981",
     },
     input: {
@@ -113,7 +114,7 @@ React.useEffect(() => {
       border: "none",
       borderRadius: "8px",
       cursor: "pointer",
-      backgroundColor: "#10b981",
+      backgroundColor: "#5a8a4a",
       color: "white",
       fontWeight: "bold",
     },
@@ -126,7 +127,7 @@ React.useEffect(() => {
     },
     badge: {
       background: "#ecfdf5",
-      color: "#047857",
+      color: "#5a8a4a",
       padding: "6px 10px",
       borderRadius: "20px",
       fontSize: "12px",

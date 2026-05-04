@@ -10,6 +10,7 @@ function Offer() {
   const [email, setEmail] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(true);
+  const [location, setLocation] = React.useState("");
 
   React.useEffect(() => {
     async function fetchOffers() {
@@ -48,6 +49,8 @@ function Offer() {
           rate,
           category,
           availability,
+          email,
+          location,
         }),
       });
 
@@ -73,99 +76,50 @@ function Offer() {
     return <p>Loading offers...</p>;
   }
 
-  return (
-    <div>
-      <h1>Skill Offers</h1>
+ return (
+  <div className="offer-page">
+    <section className="offer-hero">
+      <h1>Offer a Skill</h1>
+      <p>Share your skills with your community and help someone who needs support.</p>
+    </section>
 
-      {error && <p>{error}</p>}
+    {error && <p className="error-message">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Skill title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <br />
+    <form className="offer-form-card" onSubmit={handleSubmit}>
+      <input type="text" placeholder="Skill title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+      <textarea placeholder="Describe your skill" value={desc} onChange={(e) => setDesc(e.target.value)} required />
+      <input type="number" placeholder="Hourly rate" value={rate} onChange={(e) => setRate(e.target.value)} required />
+      <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} required />
+      <input type="text" placeholder="Availability" value={availability} onChange={(e) => setAvailability(e.target.value)} required />
+      <input type="email" placeholder="Contact Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      <input type="text" placeholder="City" value={location} onChange={(e) => setLocation(e.target.value)} required/>
+      <button type="submit">Post Offer</button>
+    </form>
 
-        <textarea
-          placeholder="Describe your skill"
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
-          required
-        />
-        <br />
-
-        <input
-          type="number"
-          placeholder="Hourly rate"
-          value={rate}
-          onChange={(e) => setRate(e.target.value)}
-          required
-        />
-        <br />
-
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          required
-          >
-          <option value="">Select a category</option>
-          <option value="Home Services">Home Services</option>
-          <option value="Education & Tutoring">Education & Tutoring</option>
-          <option value="Technology Help">Technology Help</option>
-          <option value="Errands & Assistance">Errands & Assistance</option>
-          <option value="Rides & Vehicle Help">Rides & Vehicle Help</option>
-        </select>
-        <br />
-
-        <input
-          type="text"
-          placeholder="Availability"
-          value={availability}
-          onChange={(e) => setAvailability(e.target.value)}
-          required
-        />
-        <br />
-
-        <input
-          type="text"
-          placeholder="Contact Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <br />
-        <button type="submit">Post Offer</button>
-      </form>
-
-      <hr />
+    <section className="offers-section">
+      <h2>Available Offers</h2>
 
       {offers.length === 0 ? (
-        <p>No offers available.</p>
+        <p className="empty-message">No offers available.</p>
       ) : (
-        offers.map((offer) => (
-          <div
-            key={offer.id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              marginBottom: "10px",
-            }}
-          >
-            <h2>{offer.title}</h2>
-            <p>{offer.desc}</p>
-            <p><strong>Rate:</strong> ${offer.rate}</p>
-            <p><strong>Category:</strong> {offer.category}</p>
-            <p><strong>Availability:</strong> {offer.availability}</p>
-            <p><strong>Status:</strong> {offer.status}</p>
-            <p><strong>Email:</strong> {offer.email}</p>
-          </div>
-        ))
+        <div className="offer-list">
+          {offers.map((offer) => (
+            <div key={offer._id || offer.id} className="offer-card">
+              <h3>{offer.title}</h3>
+              <p>{offer.desc}</p>
+              <p><strong>Rate:</strong> ${offer.rate}</p>
+              <p><strong>Category:</strong> {offer.category}</p>
+              <p><strong>Availability:</strong> {offer.availability}</p>
+              <p><strong>Status:</strong> {offer.status || "open"}</p>
+              <p><strong>Email:</strong> {offer.email}</p>
+              <p><strong>Location:</strong> {offer.location}</p>
+            </div>
+          ))}
+        </div>
       )}
-    </div>
-  );
+    </section>
+  </div>
+);
 }
 
 export default Offer;
