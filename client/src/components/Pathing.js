@@ -13,7 +13,7 @@ import Technology from "./categories/technology.js";
 import Errands from "./categories/errands.js"
 import Vehicle from './categories/vehicle.js';
 
-function Pathing(){
+function Pathing({user, setUser}){
     return (
         <Routes>
             <Route path="/" element={<Home />} />
@@ -25,8 +25,8 @@ function Pathing(){
             <Route path="categories/vehicle" element={<Vehicle />} />
             <Route path="request" element={<Request />} />
             <Route path="offer" element={<Offer />} />
-            <Route path="login" element={<Login />} />
-            <Route path="profile" element={<Profile />} />
+            <Route path="login" element={<Login setUser={setUser}/>} />
+            <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
         </Routes>
     );
 }

@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 });
 
 // CREATE request
-router.post("/", async (req, res) => {
+router.post("/create", async (req, res) => {
   try {
     const newRequest = await Request.create(req.body);
     res.status(201).json(newRequest);

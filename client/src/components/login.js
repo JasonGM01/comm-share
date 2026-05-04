@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ setUser }) {
   const [isSignup, setIsSignup] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    const url = isSignup ? "/signup" : "/login";
+    if (isSignup && password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    const url = isSignup ? "/api/signup" : "/api/login";
 
     const res = await fetch(`http://localhost:3001${url}`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,7 +29,7 @@ function Login() {
     const data = await res.json();
 
     if (res.ok) {
-      console.log("Success:", data);
+      setUser(data.user || data);
       navigate("/profile");
     } else {
       alert(data.message || "Error");
@@ -37,7 +43,7 @@ function Login() {
       <p>
         {isSignup
           ? "Fill out the form below to create your account."
-          : "Create an account or sign in to access community features."}
+          : "Log in to access community features."}
       </p>
 
       <div style={{ marginTop: "30px" }}>
@@ -52,7 +58,7 @@ function Login() {
             borderRadius: "6px",
             border: "1px solid #ccc",
             fontSize: "16px",
-            marginBottom: "10px"
+            marginBottom: "10px",
           }}
         />
 
@@ -68,7 +74,7 @@ function Login() {
             padding: "12px",
             borderRadius: "6px",
             border: "1px solid #ccc",
-            fontSize: "16px"
+            fontSize: "16px",
           }}
         />
 
@@ -78,13 +84,15 @@ function Login() {
             <input
               type="password"
               placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               style={{
                 width: "350px",
                 padding: "12px",
                 borderRadius: "6px",
                 border: "1px solid #ccc",
                 fontSize: "16px",
-                marginTop: "10px"
+                marginTop: "10px",
               }}
             />
           </>
@@ -92,10 +100,7 @@ function Login() {
 
         <br />
 
-        <button
-          style={{ marginTop: "20px" }}
-          onClick={handleSubmit}
-        >
+        <button style={{ marginTop: "20px" }} onClick={handleSubmit}>
           {isSignup ? "Create Account" : "Login"}
         </button>
 
