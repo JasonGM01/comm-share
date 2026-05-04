@@ -9,6 +9,7 @@ function Request() {
   const [category, setCategory] = React.useState("");
   const [availability, setAvailability] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [location, setLocation] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(true);
 
@@ -38,7 +39,7 @@ function Request() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/api/requests", {
+      const res = await fetch("http://localhost:3001/api/requests", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -49,6 +50,8 @@ function Request() {
           budget,
           category,
           availability,
+          location,
+          email,
         }),
       });
 
@@ -79,92 +82,47 @@ function Request() {
   }
 
   return (
-    <div>
-      <h1>Service Requests</h1>
+  <div className="request-page">
+    <section className="request-hero">
+      <h1>Request a Service</h1>
+      <p>Post what you need help with so community members can offer support.</p>
+    </section>
 
-      {error && <p>{error}</p>}
+    {error && <p className="error-message">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Request Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <br />
+    <form className="request-form-card" onSubmit={handleSubmit}>
+      <input type="text" placeholder="Request Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+      <textarea placeholder="Describe what you need" value={desc} onChange={(e) => setDesc(e.target.value)} required />
+      <input type="number" placeholder="Budget" value={budget} onChange={(e) => setBudget(e.target.value)} required />
+      <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} required />
+      <input type="text" placeholder="Availability" value={availability} onChange={(e) => setAvailability(e.target.value)} required />
+      <input type="email" placeholder="Contact Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      <input type="text" placeholder="City" value={location} onChange={(e) => setLocation(e.target.value)} required />
+      <button type="submit">Post Request</button>
+    </form>
 
-        <textarea 
-        type="text"
-        placeholder="Describe what you need"
-        value={desc}
-        onChange={(e) => setDesc(e.target.value)}
-        required
-        />
-        <br />
-
-        <input
-        type="number"
-        placeholder="Budget"
-        value={budget}
-        onChange={(e) => setBudget(e.target.value)}
-        required
-        />
-        <br />
-
-        <input 
-        type="text"
-        placeholder="Category"
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        required
-        />
-        <br />
-
-        <input 
-        type="text"
-        placeholder="Availability"
-        value={availability}
-        onChange={(e) => setAvailability(e.target.value)}
-        required
-        />
-        <br />
-
-        <input 
-        type="text"
-        placeholder="Contact Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        />
-        <br />
-        <button type="submit">Post Request</button>
-      </form>
-      <hr />
+    <section className="requests-section">
+      <h2>Service Requests</h2>
 
       {requests.length === 0 ? (
-        <p>No requests available</p>
+        <p className="empty-message">No requests available.</p>
       ) : (
         requests.map((request) => (
-          <div
-            key={request._id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              marginBottom: "10px",
-            }}
-          >
-            <h2>{request.title}</h2>
+          <div key={request._id} className="request-card">
+            <h3>{request.title}</h3>
             <p>{request.desc}</p>
             <p><strong>Budget:</strong> ${request.budget}</p>
-            <p><strong>Status:</strong> {request.status}</p>
-            <p>Email: {request.email}</p>
-
+            <p><strong>Category:</strong> {request.category}</p>
+            <p><strong>Availability:</strong> {request.availability}</p>
+            <p><strong>Status:</strong> {request.status || "open"}</p>
+            <p><strong>Email:</strong> {request.email}</p>
+            <p><strong>Location:</strong> {request.location}</p>
           </div>
         ))
       )}
-    </div>
-  );
+    </section>
+  </div>
+);
 }
 
 export default Request;
