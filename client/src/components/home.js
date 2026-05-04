@@ -1,5 +1,4 @@
 import React from 'react';
-
 import bottomImage from '../assets/all jobs.jpg';
 
 function Home({data}){
@@ -19,17 +18,12 @@ function Home({data}){
       </div>
 
        {/* Bottom image goes here */}
-      <img 
+      <img
         src={bottomImage} 
         alt="All Jobs" 
         className="bottom-image"
       />
-
-
-
       </header>
-      
-
     );
 }
 

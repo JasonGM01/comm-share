@@ -1,14 +1,49 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function Profile() {
-  const [editing, setEditing] = useState(false);
+function Profile({ user, setUser }) {
+  const navigate = useNavigate();
+  const [editing, setEditing] = React.useState(false);
 
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = React.useState({
     name: "Your Name",
     about: "Write something about yourself...",
     skills: ["JavaScript", "React"],
-    image: "https://via.placeholder.com/150"
+    image: "https://via.placeholder.com/150",
   });
+
+React.useEffect(() => {
+  const fetchProfile = async () => {
+    try {
+      const res = await fetch("http://localhost:3001/api/me", {
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setUser(null);
+        navigate("/login");
+        return;
+      }
+
+      setUser(data);
+
+      setProfile({
+        name: data.name || "Your Name",
+        about: data.about || "Write something about yourself...",
+        skills: data.skills || [],
+        image: data.image || "https://via.placeholder.com/150",
+      });
+    } catch (err) {
+      console.error(err);
+      setUser(null);
+      navigate("/login");
+    }
+  };
+
+  fetchProfile();
+}, [navigate, setUser]);
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
@@ -17,8 +52,18 @@ function Profile() {
   const handleSkillsChange = (e) => {
     setProfile({
       ...profile,
-      skills: e.target.value.split(",").map(s => s.trim())
+      skills: e.target.value.split(",").map((s) => s.trim()),
     });
+  };
+
+  const handleLogout = async () => {
+    await fetch("http://localhost:3001/api/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    setUser(null);
+    navigate("/login");
   };
 
   const styles = {
@@ -28,7 +73,7 @@ function Profile() {
       display: "flex",
       justifyContent: "center",
       padding: "40px 20px",
-      fontFamily: "Arial, sans-serif"
+      fontFamily: "Arial, sans-serif",
     },
     card: {
       width: "100%",
@@ -37,7 +82,7 @@ function Profile() {
       borderRadius: "16px",
       padding: "24px",
       boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
-      textAlign: "center"
+      textAlign: "center",
     },
     avatar: {
       width: "120px",
@@ -45,14 +90,14 @@ function Profile() {
       borderRadius: "50%",
       objectFit: "cover",
       marginBottom: "12px",
-      border: "3px solid #10b981"
+      border: "3px solid #10b981",
     },
     input: {
       width: "90%",
       padding: "10px",
       margin: "8px 0",
       borderRadius: "8px",
-      border: "1px solid #ddd"
+      border: "1px solid #ddd",
     },
     textarea: {
       width: "90%",
@@ -60,7 +105,7 @@ function Profile() {
       margin: "8px 0",
       borderRadius: "8px",
       border: "1px solid #ddd",
-      minHeight: "80px"
+      minHeight: "80px",
     },
     button: {
       padding: "10px 16px",
@@ -70,25 +115,22 @@ function Profile() {
       cursor: "pointer",
       backgroundColor: "#10b981",
       color: "white",
-      fontWeight: "bold"
-    },
-    secondaryButton: {
-      backgroundColor: "#6b7280"
+      fontWeight: "bold",
     },
     skills: {
       display: "flex",
       justifyContent: "center",
       flexWrap: "wrap",
       gap: "8px",
-      marginTop: "10px"
+      marginTop: "10px",
     },
     badge: {
       background: "#ecfdf5",
       color: "#047857",
       padding: "6px 10px",
       borderRadius: "20px",
-      fontSize: "12px"
-    }
+      fontSize: "12px",
+    },
   };
 
   return (
@@ -128,7 +170,7 @@ function Profile() {
               style={styles.input}
               value={profile.skills.join(",")}
               onChange={handleSkillsChange}
-              placeholder="Skills (comma separated)"
+              placeholder="Skills comma separated"
             />
 
             <button style={styles.button} onClick={() => setEditing(false)}>
@@ -151,6 +193,19 @@ function Profile() {
 
             <button style={styles.button} onClick={() => setEditing(true)}>
               Edit Profile
+            </button>
+
+            <br />
+
+            <button
+              style={{
+                ...styles.button,
+                backgroundColor: "#ef4444",
+                marginTop: "10px",
+              }}
+              onClick={handleLogout}
+            >
+              Logout
             </button>
           </div>
         )}

@@ -12,7 +12,16 @@ router.post("/", async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    res.json(user);
+    req.session.userId = user._id;
+
+    res.json({
+      message: "Login successful",
+      user: {
+        _id: user._id,
+        email: user.email,
+        name: user.name,
+      },
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
