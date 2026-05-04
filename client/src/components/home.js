@@ -1,5 +1,7 @@
 import React from 'react';
 
+import bottomImage from '../assets/all jobs.jpg';
+
 function Home({data}){
     return (
         <header className="App">
@@ -16,7 +18,18 @@ function Home({data}){
         <button className="search-button">Search</button>
       </div>
 
+       {/* Bottom image goes here */}
+      <img 
+        src={bottomImage} 
+        alt="All Jobs" 
+        className="bottom-image"
+      />
+
+
+
       </header>
+      
+
     );
 }
 
