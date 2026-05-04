@@ -8,6 +8,7 @@ const requestSchema = new mongoose.Schema(
     status: { type: String, default: "open" },
     email: { type: String },
     availability: {type: String, default: "Open"},
+    city: {type: String, required: true},
   },
   { timestamps: true }
 );

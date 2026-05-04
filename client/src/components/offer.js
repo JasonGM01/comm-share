@@ -8,6 +8,7 @@ function Offer() {
   const [category, setCategory] = React.useState("");
   const [availability, setAvailability] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [location, setLocation] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(true);
 
@@ -37,7 +38,7 @@ function Offer() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3001/api/offers", {
+      const res = await fetch("http://localhost:3001/api/offers/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,6 +49,8 @@ function Offer() {
           rate,
           category,
           availability,
+          email,
+          location,
         }),
       });
 
@@ -63,6 +66,8 @@ function Offer() {
       setRate("");
       setCategory("");
       setAvailability("");
+      setEmail("");
+      setLocation("");
     } catch (err) {
       console.error(err);
       setError("Could not create offer");
@@ -74,12 +79,18 @@ function Offer() {
   }
 
   return (
-    <div>
-      <h1>Skill Offers</h1>
+    <div className="offer-page">
+      <section className="offer-hero">
+        <h1>Offer a Skill</h1>
+        <p>
+          Share your skills with your community and help someone who needs
+          support.
+        </p>
+      </section>
 
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
+      <form className="offer-form-card" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Skill title"
@@ -110,7 +121,7 @@ function Offer() {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
-          >
+        >
           <option value="">Select a category</option>
           <option value="Home Services">Home Services</option>
           <option value="Education & Tutoring">Education & Tutoring</option>
@@ -130,40 +141,60 @@ function Offer() {
         <br />
 
         <input
-          type="text"
+          type="email"
           placeholder="Contact Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
         <br />
+
+        <input
+          type="text"
+          placeholder="City"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          required
+        />
+        <br />
+
         <button type="submit">Post Offer</button>
       </form>
 
-      <hr />
+      <section className="offers-section">
+        <h2>Available Offers</h2>
 
-      {offers.length === 0 ? (
-        <p>No offers available.</p>
-      ) : (
-        offers.map((offer) => (
-          <div
-            key={offer.id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              marginBottom: "10px",
-            }}
-          >
-            <h2>{offer.title}</h2>
-            <p>{offer.desc}</p>
-            <p><strong>Rate:</strong> ${offer.rate}</p>
-            <p><strong>Category:</strong> {offer.category}</p>
-            <p><strong>Availability:</strong> {offer.availability}</p>
-            <p><strong>Status:</strong> {offer.status}</p>
-            <p><strong>Email:</strong> {offer.email}</p>
+        {offers.length === 0 ? (
+          <p className="empty-message">No offers available.</p>
+        ) : (
+          <div className="offer-list">
+            {offers.map((offer) => (
+              <div key={offer._id || offer.id} className="offer-card">
+                <h3>{offer.title}</h3>
+                <p>{offer.desc}</p>
+                <p>
+                  <strong>Rate:</strong> ${offer.rate}
+                </p>
+                <p>
+                  <strong>Category:</strong> {offer.category}
+                </p>
+                <p>
+                  <strong>Availability:</strong> {offer.availability}
+                </p>
+                <p>
+                  <strong>Status:</strong> {offer.status || "open"}
+                </p>
+                <p>
+                  <strong>Email:</strong> {offer.email}
+                </p>
+                <p>
+                  <strong>Location:</strong> {offer.location}
+                </p>
+              </div>
+            ))}
           </div>
-        ))
-      )}
+        )}
+      </section>
     </div>
   );
 }

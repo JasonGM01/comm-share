@@ -5,12 +5,14 @@
 
 .App-link {
   color: #61dafb;
+  color: #5f8f4e;
 }
 
 h1 {
   font-size: 42px;
   margin-bottom: 10px;
   color: #9caf88;
+  color: #5a8a4a;
 }
 
 p {
@@ -43,6 +45,7 @@ button {
   font-weight: 700;
   font-size: 22px;
   color: #9caf88;
+  color: #5a8a4a;
 }
 
 .nav-right {
@@ -65,6 +68,7 @@ button {
 .loginButton {
   display: inline-block;
   background-color: #9caf88;
+  background-color: #5a8a4a;
   color: white;
   padding: 8px 16px;
   border-radius: 6px;
@@ -85,19 +89,38 @@ button {
 .search-bar {
   width: 500px;
   padding: 14px 20px;
+  width: 520px;
+  max-width: 90%;
+  background: white;
+  padding: 8px 10px 8px 18px;
   border-radius: 40px;
   border: 1px solid #ccc;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
   font-size: 16px;
 }
 
 .search-button {
-  padding: 10px 18px;
+  padding: 14px 20px;
+  padding: 12px 24px;
   border: none;
   border-radius: 6px;
   background-color: #9caf88;
+  border-radius: 30px;
+  background-color: #5f8f4e;
   color: white;
   font-weight: 600;
   cursor: pointer;
+  margin-top: 0;
 }
 
 .search-button:hover {
@@ -111,4 +134,203 @@ display: block;
   height: auto;
   object-fit: contain;
   margin: 40px auto 0;
+}
+
+.how-it-works {
+  background-color: #f3f6f4; /* soft section background */
+  padding: 80px 20px;
+  text-align: center;
+
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.how-it-works h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 50px;
+}
+
+.steps-container {
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+  flex-wrap: wrap;
+}
+
+.step {
+  max-width: 220px;
+}
+
+.icon {
+  width: 55px;
+  height: 55px;
+  background-color: #e6f0ea;
+  color: #5f8f4e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-weight: bold;
+}
+
+.offer-page {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.offer-hero {
+  text-align: center;
+  padding: 60px 20px 30px;
+}
+
+.offer-hero h1 {
+  color: #5a8a4a;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.offer-hero p {
+  color: #555;
+  font-size: 18px;
+}
+
+.offer-form-card {
+  background: white;
+  max-width: 500px;
+  margin: 0 auto 40px;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.offer-form-card input,
+.offer-form-card textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.offer-form-card textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.offer-form-card button {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  margin-top: 40px;
+  display: block;
+  padding: 12px;
+  background-color: #5a8a4a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.offers-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.offers-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.offer-card {
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.offer-card h3 {
+  color: #2f4f2f;
+  margin-bottom: 10px;
+}
+
+.error-message,
+.empty-message {
+  text-align: center;
+}
+
+.request-page {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.request-hero {
+  text-align: center;
+  padding: 60px 20px 30px;
+}
+
+.request-hero h1 {
+  color: #5a8a4a;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.request-form-card {
+  background: white;
+  max-width: 500px;
+  margin: 0 auto 40px;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.request-form-card input,
+.request-form-card textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.request-form-card button {
+  width: 100%;
+  padding: 12px;
+  background-color: #5a8a4a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.requests-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.request-card {
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+  text-align: center;
 }

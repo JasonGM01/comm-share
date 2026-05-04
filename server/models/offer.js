@@ -9,6 +9,7 @@ const offerSchema = new mongoose.Schema(
     availability: {type: String, required: true},
     status: { type: String, default: "open"},
     email: {type: String, required: true},
+    city: {type: String, required: true},
   },
   { timestamps: true }
 );

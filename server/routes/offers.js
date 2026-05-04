@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // CREATE offer
-router.post("/", async (req, res) => {
+router.post("/create", async (req, res) => {
   try {
     const newOffer = await Offer.create(req.body);
     res.status(201).json(newOffer);

@@ -8,6 +8,7 @@ function Request() {
   const [budget, setBudget] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [location, setLocation] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(true);
 
@@ -40,30 +41,34 @@ function Request() {
       const res = await fetch("http://localhost:3001/api/requests/create", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           title,
           desc,
           budget,
           category,
+          email,
+          location,
         }),
       });
 
       if (!res.ok) {
-        throw new Error("Failed to process request");
+        throw new Error("Failed to create request");
       }
 
       const newRequest = await res.json();
       setRequests([...requests, newRequest]);
 
       setTitle("");
-        setDesc("");
-        setBudget("");
-        setCategory("");
+      setDesc("");
+      setBudget("");
+      setCategory("");
+      setEmail("");
+      setLocation("");
     } catch (err) {
       console.error(err);
-      setError("Could not process request");
+      setError("Could not create request");
     }
   }
 
@@ -71,17 +76,16 @@ function Request() {
     return <p>Loading requests...</p>;
   }
 
-  if (error) {
-    return <p>{error}</p>;
-  }
-
   return (
-    <div>
-      <h1>Service Requests</h1>
+    <div className="request-page">
+      <section className="request-hero">
+        <h1>Request a Service</h1>
+        <p>Post what you need help with so community members can offer support.</p>
+      </section>
 
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
+      <form className="request-form-card" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Request Title"
@@ -89,31 +93,27 @@ function Request() {
           onChange={(e) => setTitle(e.target.value)}
           required
         />
-        <br />
 
-        <textarea 
-        type="text"
-        placeholder="Describe what you need"
-        value={desc}
-        onChange={(e) => setDesc(e.target.value)}
-        required
+        <textarea
+          placeholder="Describe what you need"
+          value={desc}
+          onChange={(e) => setDesc(e.target.value)}
+          required
         />
-        <br />
 
         <input
-        type="number"
-        placeholder="Budget"
-        value={budget}
-        onChange={(e) => setBudget(e.target.value)}
-        required
+          type="number"
+          placeholder="Budget"
+          value={budget}
+          onChange={(e) => setBudget(e.target.value)}
+          required
         />
-        <br />
 
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
-          >
+        >
           <option value="">Select a category</option>
           <option value="Home Services">Home Services</option>
           <option value="Education & Tutoring">Education & Tutoring</option>
@@ -121,41 +121,48 @@ function Request() {
           <option value="Errands & Assistance">Errands & Assistance</option>
           <option value="Rides & Vehicle Help">Rides & Vehicle Help</option>
         </select>
-        <br />
 
-        <input 
-        type="text"
-        placeholder="Contact Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
+        <input
+          type="email"
+          placeholder="Contact Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
         />
-        <br />
+
+        <input
+          type="text"
+          placeholder="City"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          required
+        />
+
         <button type="submit">Post Request</button>
       </form>
-      <hr />
 
-      {requests.length === 0 ? (
-        <p>No requests available</p>
-      ) : (
-        requests.map((request) => (
-          <div
-            key={request._id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              marginBottom: "10px",
-            }}
-          >
-            <h2>{request.title}</h2>
-            <p>{request.desc}</p>
-            <p><strong>Budget:</strong> ${request.budget}</p>
-            <p><strong>Status:</strong> {request.status}</p>
-            <p>Email: {request.email}</p>
+      <section className="requests-section">
+        <h2>Service Requests</h2>
 
+        {requests.length === 0 ? (
+          <p className="empty-message">No requests available.</p>
+        ) : (
+          <div className="request-list">
+            {requests.map((request) => (
+              <div key={request._id} className="request-card">
+                <h3>{request.title}</h3>
+                <p>{request.desc}</p>
+                <p><strong>Budget:</strong> ${request.budget}</p>
+                <p><strong>Category:</strong> {request.category}</p>
+                <p><strong>Availability:</strong> {request.availability || "Open"}</p>
+                <p><strong>Status:</strong> {request.status || "open"}</p>
+                <p><strong>Email:</strong> {request.email}</p>
+                <p><strong>Location:</strong> {request.location}</p>
+              </div>
+            ))}
           </div>
-        ))
-      )}
+        )}
+      </section>
     </div>
   );
 }
