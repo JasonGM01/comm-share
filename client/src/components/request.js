@@ -48,8 +48,8 @@ function Request() {
           desc,
           budget,
           category,
-          email,
           location,
+          email,
         }),
       });
 
@@ -77,94 +77,46 @@ function Request() {
   }
 
   return (
-    <div className="request-page">
-      <section className="request-hero">
-        <h1>Request a Service</h1>
-        <p>Post what you need help with so community members can offer support.</p>
-      </section>
+  <div className="request-page">
+    <section className="request-hero">
+      <h1>Request a Service</h1>
+      <p>Post what you need help with so community members can offer support.</p>
+    </section>
 
-      {error && <p className="error-message">{error}</p>}
+    {error && <p className="error-message">{error}</p>}
 
-      <form className="request-form-card" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Request Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
+    <form className="request-form-card" onSubmit={handleSubmit}>
+      <input type="text" placeholder="Request Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+      <textarea placeholder="Describe what you need" value={desc} onChange={(e) => setDesc(e.target.value)} required />
+      <input type="number" placeholder="Budget" value={budget} onChange={(e) => setBudget(e.target.value)} required />
+      <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} required />
+      <input type="email" placeholder="Contact Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      <input type="text" placeholder="City" value={location} onChange={(e) => setLocation(e.target.value)} required />
+      <button type="submit">Post Request</button>
+    </form>
 
-        <textarea
-          placeholder="Describe what you need"
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
-          required
-        />
+    <section className="requests-section">
+      <h2>Service Requests</h2>
 
-        <input
-          type="number"
-          placeholder="Budget"
-          value={budget}
-          onChange={(e) => setBudget(e.target.value)}
-          required
-        />
-
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          required
-        >
-          <option value="">Select a category</option>
-          <option value="Home Services">Home Services</option>
-          <option value="Education & Tutoring">Education & Tutoring</option>
-          <option value="Technology Help">Technology Help</option>
-          <option value="Errands & Assistance">Errands & Assistance</option>
-          <option value="Rides & Vehicle Help">Rides & Vehicle Help</option>
-        </select>
-
-        <input
-          type="email"
-          placeholder="Contact Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-
-        <input
-          type="text"
-          placeholder="City"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          required
-        />
-
-        <button type="submit">Post Request</button>
-      </form>
-
-      <section className="requests-section">
-        <h2>Service Requests</h2>
-
-        {requests.length === 0 ? (
-          <p className="empty-message">No requests available.</p>
-        ) : (
-          <div className="request-list">
-            {requests.map((request) => (
-              <div key={request._id} className="request-card">
-                <h3>{request.title}</h3>
-                <p>{request.desc}</p>
-                <p><strong>Budget:</strong> ${request.budget}</p>
-                <p><strong>Category:</strong> {request.category}</p>
-                <p><strong>Availability:</strong> {request.availability || "Open"}</p>
-                <p><strong>Status:</strong> {request.status || "open"}</p>
-                <p><strong>Email:</strong> {request.email}</p>
-                <p><strong>Location:</strong> {request.location}</p>
-              </div>
-            ))}
+      {requests.length === 0 ? (
+        <p className="empty-message">No requests available.</p>
+      ) : (
+        requests.map((request) => (
+          <div key={request._id} className="request-card">
+            <h3>{request.title}</h3>
+            <p>{request.desc}</p>
+            <p><strong>Budget:</strong> ${request.budget}</p>
+            <p><strong>Category:</strong> {request.category}</p>
+            <p><strong>Availability:</strong> {request.availability}</p>
+            <p><strong>Status:</strong> {request.status || "open"}</p>
+            <p><strong>Email:</strong> {request.email}</p>
+            <p><strong>Location:</strong> {request.location}</p>
           </div>
-        )}
-      </section>
-    </div>
-  );
+        ))
+      )}
+    </section>
+  </div>
+);
 }
 
 export default Request;

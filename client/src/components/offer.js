@@ -79,18 +79,12 @@ function Offer() {
   }
 
   return (
-    <div className="offer-page">
-      <section className="offer-hero">
-        <h1>Offer a Skill</h1>
-        <p>
-          Share your skills with your community and help someone who needs
-          support.
-        </p>
-      </section>
+    <div>
+      <h1>Skill Offers</h1>
 
-      {error && <p className="error-message">{error}</p>}
+      {error && <p>{error}</p>}
 
-      <form className="offer-form-card" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Skill title"
@@ -121,7 +115,7 @@ function Offer() {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
-        >
+          >
           <option value="">Select a category</option>
           <option value="Home Services">Home Services</option>
           <option value="Education & Tutoring">Education & Tutoring</option>
@@ -141,60 +135,40 @@ function Offer() {
         <br />
 
         <input
-          type="email"
+          type="text"
           placeholder="Contact Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
         <br />
-
-        <input
-          type="text"
-          placeholder="City"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          required
-        />
-        <br />
-
         <button type="submit">Post Offer</button>
       </form>
 
-      <section className="offers-section">
-        <h2>Available Offers</h2>
+      <hr />
 
-        {offers.length === 0 ? (
-          <p className="empty-message">No offers available.</p>
-        ) : (
-          <div className="offer-list">
-            {offers.map((offer) => (
-              <div key={offer._id || offer.id} className="offer-card">
-                <h3>{offer.title}</h3>
-                <p>{offer.desc}</p>
-                <p>
-                  <strong>Rate:</strong> ${offer.rate}
-                </p>
-                <p>
-                  <strong>Category:</strong> {offer.category}
-                </p>
-                <p>
-                  <strong>Availability:</strong> {offer.availability}
-                </p>
-                <p>
-                  <strong>Status:</strong> {offer.status || "open"}
-                </p>
-                <p>
-                  <strong>Email:</strong> {offer.email}
-                </p>
-                <p>
-                  <strong>Location:</strong> {offer.location}
-                </p>
-              </div>
-            ))}
+      {offers.length === 0 ? (
+        <p>No offers available.</p>
+      ) : (
+        offers.map((offer) => (
+          <div
+            key={offer.id}
+            style={{
+              border: "1px solid #ccc",
+              padding: "10px",
+              marginBottom: "10px",
+            }}
+          >
+            <h2>{offer.title}</h2>
+            <p>{offer.desc}</p>
+            <p><strong>Rate:</strong> ${offer.rate}</p>
+            <p><strong>Category:</strong> {offer.category}</p>
+            <p><strong>Availability:</strong> {offer.availability}</p>
+            <p><strong>Status:</strong> {offer.status}</p>
+            <p><strong>Email:</strong> {offer.email}</p>
           </div>
-        )}
-      </section>
+        ))
+      )}
     </div>
   );
 }

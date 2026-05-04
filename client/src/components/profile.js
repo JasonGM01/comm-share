@@ -6,44 +6,44 @@ function Profile({ user, setUser }) {
   const [editing, setEditing] = React.useState(false);
 
   const [profile, setProfile] = React.useState({
-    name: "Your Name",
-    about: "Write something about yourself...",
-    skills: ["JavaScript", "React"],
-    image: "https://via.placeholder.com/150",
+    name: "",
+    about: "",
+    skills: [],
+    image: "",
   });
 
-React.useEffect(() => {
-  const fetchProfile = async () => {
-    try {
-      const res = await fetch("http://localhost:3001/api/me", {
-        credentials: "include",
-      });
+  React.useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await fetch("http://localhost:3001/api/me", {
+          credentials: "include",
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      if (!res.ok) {
+        if (!res.ok) {
+          setUser(null);
+          navigate("/login");
+          return;
+        }
+
+        setUser(data);
+
+        setProfile({
+          name: data.name || "",
+          about: data.about || "",
+          skills: data.skills || [],
+          image: data.image || "",
+        });
+      } catch (err) {
+        console.error(err);
         setUser(null);
         navigate("/login");
-        return;
       }
+    };
 
-      setUser(data);
-
-      setProfile({
-        name: data.name || "Your Name",
-        about: data.about || "Write something about yourself...",
-        skills: data.skills || [],
-        image: data.image || "https://via.placeholder.com/150",
-      });
-    } catch (err) {
-      console.error(err);
-      setUser(null);
-      navigate("/login");
-    }
-  };
-
-  fetchProfile();
-}, [navigate, setUser]);
+    fetchProfile();
+  }, [navigate, setUser]);
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
@@ -56,6 +56,33 @@ React.useEffect(() => {
     });
   };
 
+  // 🔥 SAVE TO BACKEND
+  const handleSave = async () => {
+    try {
+      const res = await fetch("http://localhost:3001/api/me", {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(profile),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to save profile");
+      }
+
+      setUser(data);
+      setProfile(data);
+      setEditing(false);
+    } catch (err) {
+      console.error(err);
+      alert("Could not save profile");
+    }
+  };
+
   const handleLogout = async () => {
     await fetch("http://localhost:3001/api/logout", {
       method: "POST",
@@ -66,150 +93,54 @@ React.useEffect(() => {
     navigate("/login");
   };
 
-  const styles = {
-    page: {
-      minHeight: "100vh",
-      background: "linear-gradient(to bottom right, #f8fafc, #ecfdf5)",
-      display: "flex",
-      justifyContent: "center",
-      padding: "40px 20px",
-      fontFamily: "Arial, sans-serif",
-    },
-    card: {
-      width: "100%",
-      maxWidth: "600px",
-      background: "white",
-      borderRadius: "16px",
-      padding: "24px",
-      boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
-      textAlign: "center",
-    },
-    avatar: {
-      width: "120px",
-      height: "120px",
-      borderRadius: "50%",
-      objectFit: "cover",
-      marginBottom: "12px",
-      border: "3px solid #10b981",
-    },
-    input: {
-      width: "90%",
-      padding: "10px",
-      margin: "8px 0",
-      borderRadius: "8px",
-      border: "1px solid #ddd",
-    },
-    textarea: {
-      width: "90%",
-      padding: "10px",
-      margin: "8px 0",
-      borderRadius: "8px",
-      border: "1px solid #ddd",
-      minHeight: "80px",
-    },
-    button: {
-      padding: "10px 16px",
-      marginTop: "12px",
-      border: "none",
-      borderRadius: "8px",
-      cursor: "pointer",
-      backgroundColor: "#10b981",
-      color: "white",
-      fontWeight: "bold",
-    },
-    skills: {
-      display: "flex",
-      justifyContent: "center",
-      flexWrap: "wrap",
-      gap: "8px",
-      marginTop: "10px",
-    },
-    badge: {
-      background: "#ecfdf5",
-      color: "#047857",
-      padding: "6px 10px",
-      borderRadius: "20px",
-      fontSize: "12px",
-    },
-  };
-
   return (
-    <div style={styles.page}>
-      <div style={styles.card}>
-        <h1 style={{ marginBottom: "20px" }}>Profile</h1>
+    <div style={{ textAlign: "center", padding: "40px" }}>
+      <h1>Profile</h1>
 
-        <img src={profile.image} alt="profile" style={styles.avatar} />
+      <img
+        src={profile.image || "https://via.placeholder.com/150"}
+        alt="profile"
+        style={{
+          width: "120px",
+          height: "120px",
+          borderRadius: "50%",
+          marginBottom: "10px",
+        }}
+      />
 
-        {editing ? (
+      {editing ? (
+        <>
+          <input name="image" value={profile.image} onChange={handleChange} placeholder="Image URL" />
+          <br />
+
+          <input name="name" value={profile.name} onChange={handleChange} placeholder="Name" />
+          <br />
+
+          <textarea name="about" value={profile.about} onChange={handleChange} placeholder="About" />
+          <br />
+
+          <input value={profile.skills.join(",")} onChange={handleSkillsChange} placeholder="Skills" />
+          <br />
+
+          <button onClick={handleSave}>Save Profile</button>
+        </>
+      ) : (
+        <>
+          <h2>{profile.name}</h2>
+          <p>{profile.about}</p>
+
           <div>
-            <input
-              style={styles.input}
-              name="image"
-              value={profile.image}
-              onChange={handleChange}
-              placeholder="Image URL"
-            />
-
-            <input
-              style={styles.input}
-              name="name"
-              value={profile.name}
-              onChange={handleChange}
-              placeholder="Name"
-            />
-
-            <textarea
-              style={styles.textarea}
-              name="about"
-              value={profile.about}
-              onChange={handleChange}
-              placeholder="About Me"
-            />
-
-            <input
-              style={styles.input}
-              value={profile.skills.join(",")}
-              onChange={handleSkillsChange}
-              placeholder="Skills comma separated"
-            />
-
-            <button style={styles.button} onClick={() => setEditing(false)}>
-              Save Profile
-            </button>
+            {profile.skills.map((skill, i) => (
+              <span key={i} style={{ marginRight: "6px" }}>{skill}</span>
+            ))}
           </div>
-        ) : (
-          <div>
-            <h2>{profile.name}</h2>
-            <p style={{ color: "#555" }}>{profile.about}</p>
 
-            <h3 style={{ marginTop: "20px" }}>Skills</h3>
-            <div style={styles.skills}>
-              {profile.skills.map((skill, index) => (
-                <span key={index} style={styles.badge}>
-                  {skill}
-                </span>
-              ))}
-            </div>
-
-            <button style={styles.button} onClick={() => setEditing(true)}>
-              Edit Profile
-            </button>
-
-            <br />
-
-            <button
-              style={{
-                ...styles.button,
-                backgroundColor: "#ef4444",
-                marginTop: "10px",
-              }}
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </div>
-        )}
-      </div>
+          <br />
+          <button onClick={() => setEditing(true)}>Edit Profile</button>
+          <br />
+          <button onClick={handleLogout}>Logout</button>
+        </>
+      )}
     </div>
   );
 }

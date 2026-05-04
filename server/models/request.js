@@ -7,8 +7,7 @@ const requestSchema = new mongoose.Schema(
     budget: { type: Number, required: true },
     status: { type: String, default: "open" },
     email: { type: String },
-    availability: {type: String, default: "Open"},
-    city: {type: String, required: true},
+    location: { type: String, required: true },
   },
   { timestamps: true }
 );
