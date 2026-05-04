@@ -106,13 +106,18 @@ function Offer() {
         />
         <br />
 
-        <input
-          type="text"
-          placeholder="Category"
+        <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
-        />
+          >
+          <option value="">Select a category</option>
+          <option value="Home Services">Home Services</option>
+          <option value="Education & Tutoring">Education & Tutoring</option>
+          <option value="Technology Help">Technology Help</option>
+          <option value="Errands & Assistance">Errands & Assistance</option>
+          <option value="Rides & Vehicle Help">Rides & Vehicle Help</option>
+        </select>
         <br />
 
         <input
