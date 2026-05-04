@@ -15,7 +15,9 @@ router.get("/", async (req, res) => {
 // CREATE request
 router.post("/create", async (req, res) => {
   try {
-    const newRequest = await Request.create(req.body);
+    const newRequest = await Request.create({
+      ...req.body, 
+      availability: "Open"});
     res.status(201).json(newRequest);
   } catch (err) {
     res.status(400).json({ error: "Failed to create request" });

@@ -7,7 +7,6 @@ function Request() {
   const [desc, setDesc] = React.useState("");
   const [budget, setBudget] = React.useState("");
   const [category, setCategory] = React.useState("");
-  const [availability, setAvailability] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(true);
@@ -38,7 +37,7 @@ function Request() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/api/requests/create", {
+      const res = await fetch("http://localhost:3001/api/requests/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -48,7 +47,6 @@ function Request() {
           desc,
           budget,
           category,
-          availability,
         }),
       });
 
@@ -63,7 +61,6 @@ function Request() {
         setDesc("");
         setBudget("");
         setCategory("");
-        setAvailability("");
     } catch (err) {
       console.error(err);
       setError("Could not process request");
@@ -112,22 +109,18 @@ function Request() {
         />
         <br />
 
-        <input 
-        type="text"
-        placeholder="Category"
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        required
-        />
-        <br />
-
-        <input 
-        type="text"
-        placeholder="Availability"
-        value={availability}
-        onChange={(e) => setAvailability(e.target.value)}
-        required
-        />
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
+          >
+          <option value="">Select a category</option>
+          <option value="Home Services">Home Services</option>
+          <option value="Education & Tutoring">Education & Tutoring</option>
+          <option value="Technology Help">Technology Help</option>
+          <option value="Errands & Assistance">Errands & Assistance</option>
+          <option value="Rides & Vehicle Help">Rides & Vehicle Help</option>
+        </select>
         <br />
 
         <input 
