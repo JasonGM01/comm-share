@@ -9,14 +9,14 @@ const sampleRequests = [
     desc: "Need someone to fix a leak under the sink",
     budget: 120,
     status: "open",
-    email: "person1@example.com",
+    email: "leakfix@example.com",
   },
   {
     title: "Yard cleanup",
     desc: "Need someone to help cut grass and garden",
     budget: 80,
     status: "open",
-    email: "person2@example.com",
+    email: "yardclean@example.com",
   },
 ];
 

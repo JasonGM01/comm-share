@@ -31,11 +31,9 @@ async function seed() {
     console.log("Connected to MongoDB");
 
     await Offer.deleteMany({});
-    console.log("Old offers deleted");
-
     await Offer.insertMany(sampleOffers);
+    
     console.log("Offer seed data inserted");
-
     process.exit(0);
   } catch (err) {
     console.error("Seeding error:", err);
