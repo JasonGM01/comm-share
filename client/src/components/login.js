@@ -6,11 +6,17 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    const url = isSignup ? "/signup" : "/login";
+    if(isSignup && password !== confirmPassword){
+      alert("Passwords do not match!");
+      return;
+    }
+    
+    const url = isSignup ? "/api/signup" : "/api/login";
 
     const res = await fetch(`http://localhost:3001${url}`, {
       method: "POST",
@@ -37,7 +43,7 @@ function Login() {
       <p>
         {isSignup
           ? "Fill out the form below to create your account."
-          : "Create an account or sign in to access community features."}
+          : "Log in to access community features."}
       </p>
 
       <div style={{ marginTop: "30px" }}>
@@ -78,6 +84,8 @@ function Login() {
             <input
               type="password"
               placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               style={{
                 width: "350px",
                 padding: "12px",

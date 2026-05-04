@@ -38,7 +38,7 @@ function Request() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/api/requests", {
+      const res = await fetch("http://localhost:3000/api/requests/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
