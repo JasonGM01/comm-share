@@ -25,6 +25,7 @@ app.use(
 
 const requestRoutes = require("./routes/requests");
 const offerRoutes = require("./routes/offers");
+<<<<<<< Updated upstream
 const signupRoutes = require("./routes/signups");
 const loginRoutes = require("./routes/login");
 const meRoutes = require("./routes/me");
@@ -37,6 +38,13 @@ app.use("/api/login", loginRoutes);
 app.use("/api/me", meRoutes);
 app.use("/api/logout", logoutRoutes);
 
+=======
+const authRoutes = require("./routes/auth");
+
+app.use("/api/requests", requestRoutes);
+app.use("/api/offers", offerRoutes);
+app.use("/api/auth", authRoutes);
+>>>>>>> Stashed changes
 
 mongoose
   .connect(

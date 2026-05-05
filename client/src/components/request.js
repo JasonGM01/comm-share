@@ -5,10 +5,16 @@ function Request() {
   const [requests, setRequests] = React.useState([]);
   const [title, setTitle] = React.useState("");
   const [desc, setDesc] = React.useState("");
+<<<<<<< Updated upstream
   const [budget, setBudget] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [location, setLocation] = React.useState("");
+=======
+  const [rate, setRate] = React.useState("");
+  const [category, setCategory] = React.useState("");
+  const [availability, setAvailability] = React.useState("");
+>>>>>>> Stashed changes
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(true);
 
@@ -33,6 +39,43 @@ function Request() {
 
     fetchRequests();
   }, []);
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:3001/api/offers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          desc,
+          rate,
+          category,
+          availability,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create offer");
+      }
+
+      setTitle("");
+      setDesc("");
+      setRate("");
+      setCategory("");
+      setAvailability("");
+    } catch (err) {
+      console.error(err);
+      setError("Could not create offer");
+    }
+  }
+
+  if (loading) {
+    return <p>Loading offers...</p>;
+  }
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -77,6 +120,7 @@ function Request() {
   }
 
   return (
+<<<<<<< Updated upstream
   <div className="request-page">
     <section className="request-hero">
       <h1>Request a Service</h1>
@@ -97,7 +141,65 @@ function Request() {
 
     <section className="requests-section">
       <h2>Service Requests</h2>
+=======
+    <div>
+      <h1>Service Requests</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Request Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <br />
+>>>>>>> Stashed changes
 
+        <textarea
+          placeholder="Describe what you need"
+          value={desc}
+          onChange={(e) => setDesc(e.target.value)}
+          required
+        />
+        <br />
+
+        <input
+          type="number"
+          placeholder="Budget"
+          value={rate}
+          onChange={(e) => setRate(e.target.value)}
+          required
+        />
+        <br />
+
+        <input
+          type="text"
+          placeholder="Category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
+        />
+        <br />
+
+        <input
+          type="text"
+          placeholder="Availability"
+          value={availability}
+          onChange={(e) => setAvailability(e.target.value)}
+          required
+        />
+        <br />
+
+        <input
+          type="text"
+          placeholder="Contact Email"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <br />
+        <button type="submit">Post Offer</button>
+      </form>
       {requests.length === 0 ? (
         <p className="empty-message">No requests available.</p>
       ) : (
@@ -106,11 +208,17 @@ function Request() {
             <h3>{request.title}</h3>
             <p>{request.desc}</p>
             <p><strong>Budget:</strong> ${request.budget}</p>
+<<<<<<< Updated upstream
             <p><strong>Category:</strong> {request.category}</p>
             <p><strong>Availability:</strong> {request.availability}</p>
             <p><strong>Status:</strong> {request.status || "open"}</p>
             <p><strong>Email:</strong> {request.email}</p>
             <p><strong>Location:</strong> {request.location}</p>
+=======
+            <p><strong>Status:</strong> {request.status}</p>
+            <p>Email: {request.email}</p>
+
+>>>>>>> Stashed changes
           </div>
         ))
       )}

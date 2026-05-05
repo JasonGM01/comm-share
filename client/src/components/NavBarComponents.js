@@ -10,6 +10,7 @@ function Navbar({ user }) {
       <div className="nav-right">
         <Link to="/" className="nav-link">Home</Link>
         <Link to="/categories" className="nav-link">Browse Categories</Link>
+<<<<<<< Updated upstream
 
         {user && (
           <>
@@ -22,6 +23,12 @@ function Navbar({ user }) {
         {!user && (
           <Link to="/login" className="loginButton">Sign Up/Login</Link>
         )}
+=======
+        <Link to="/request" className="nav-link">Request Service</Link>
+        <Link to="/offer" className="nav-link">Offer Service</Link>
+        <Link to="/login" className="loginButton">Sign Up/Login</Link>
+        <Link to="/profile" className="nav-link">Profile</Link>
+>>>>>>> Stashed changes
       </div>
     </nav>
   );

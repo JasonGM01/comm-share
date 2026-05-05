@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -143,6 +144,14 @@ function Profile({ user, setUser }) {
       )}
     </div>
   );
+=======
+import React from 'react';
+
+function Profile(){
+    return (
+        <div>code</div>
+    );
+>>>>>>> Stashed changes
 }
 
 export default Profile;
